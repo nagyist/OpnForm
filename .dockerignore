@@ -1,2 +1,4 @@
-.git
-Dockerfile
+/.git
+/Dockerfile
+/data
+\.env
