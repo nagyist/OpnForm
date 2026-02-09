@@ -291,6 +291,11 @@ Route::group(['middleware' => 'auth.multi'], function () {
             [\App\Http\Controllers\Admin\AdminController::class, 'disableTwoFactorAuthentication']
         );
 
+        Route::post(
+            'clear-user-cache',
+            [\App\Http\Controllers\Admin\AdminController::class, 'clearUserCache']
+        );
+
         Route::group(['prefix'  => 'billing'], function () {
             Route::get('{user}/customer', [\App\Http\Controllers\Admin\BillingController::class, 'getCustomer']);
             Route::patch('/customer', [\App\Http\Controllers\Admin\BillingController::class, 'updateCustomer']);
