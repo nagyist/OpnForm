@@ -18,6 +18,7 @@ use App\Service\Storage\FilenameUrlEncoder;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
@@ -218,8 +219,11 @@ class FormSubmissionController extends Controller
     {
         $request->validate([
             'submissionIds' => 'required|array',
-            'submissionIds.*' => 'required|integer',
-            'submissionIds.*' => 'exists:form_submissions,id',
+            'submissionIds.*' => [
+                'required',
+                'integer',
+                Rule::exists('form_submissions', 'id')->where('form_id', $form->id),
+            ],
         ]);
 
         $this->authorize('delete', $form);
